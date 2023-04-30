@@ -1,0 +1,22 @@
+extends layout.pug
+
+block title
+    title Page Not Found | E-Store
+
+block content
+    .main_content
+        .section
+            .error_wrap
+                .container
+                    .row.align-items-center.justify-content-center
+                        .col-lg-6.col-md-10.order-lg-first
+                            .text-center
+                                .error_txt 404
+                                h5.mb-2.mb-sm-3 oops! The page you requested was not found!
+                                p The page you are looking for was moved, removed, renamed or might never existed.
+                                .search_form.pb-3.pb-md-4
+                                    form(method='post')
+                                        input#text.form-control(name='text' type='text' placeholder='Search')
+                                        button.btn.icon_search(type='submit')
+                                            i.ion-ios-search-strong
+                                a.btn.btn-fill-out(href='/') Back To Home

@@ -1,0 +1,61 @@
+extends layout.pug
+
+block styles
+    link(rel='stylesheet' href='/css/jquery-ui.css')
+    link(rel='stylesheet' href='/css/themify-icons.css')
+
+block content
+    div.breadcrumb_section.bg_gray.page-title-mini
+        div.container
+            div.row.align-items-center
+                div.col-md-6
+                    div.page-title
+                        h1 Search Results for: #{keyword}
+    .main_content
+        .section
+            .container
+                .row
+                    div.col-lg-9
+                        div.row.align-items-center.mb-4.pb-1
+                            .col-12
+                                .product_header
+                                    .product_header_left
+                                        .custom_select
+                                            select#filter-sort.form-control.form-control-sm(name="sort")
+                                                option(value="order") Default sorting
+                                                option(value="id" selected= (sort === 'id')) Sort by newness
+                                                option(value="price" selected= ((sort === 'price'))) Sort by price: low to high
+                                                option(value="price-desc" selected= (sort === 'price-desc')) Sort by price: high to low
+                        div.col-12
+                            .row.shop_container.loadmore(data-item='8' data-item-show='4' data-finish-message='No More Item to Show' data-btn='Load More')
+                                each prod in products
+                                    .col-lg-3.col-md-4.col-6.grid_item(style='cursor: pointer;')
+                                        .product
+                                            .product_img
+                                                img(src= prod.thumbnail alt= prod.name)
+                                            .product_info
+                                                h6.product_title= prod.name
+                                                .product_price
+                                                    span.price $#{prod.price}
+                                                .rating_wrap
+                                                    .rating
+                                                        .product_rate(style=`width:${prod.rating * 20}%`)
+                                                    span.rating_num
+                                                        = prod.rating
+                                                a.btn.btn-fill-out.btn-sm(href='#' id=`cart-btn-${prod.id}` onclick=`addToCart(${prod.id})` style='width: 100%;margin-top: 0.5em;') Add to Cart
+                    .col-lg-3.order-lg-first.mt-4.pt-2.mt-lg-0.pt-lg-0
+                        .sidebar
+                            .widget
+                                h5.widget_title Filter
+                                .filter_price
+                                    #price_filter(data-min="0" data-max="500" data-min-value=`${minPrice || "50"}` data-max-value=`${maxPrice || "300"}` data-price-sign="$")
+                                    .price_range
+                                        span Price: #[span#flt_price]
+                                        input#price_first(type="hidden")
+                                        input#price_second(type="hidden")
+                                        a.btn.btn-fill-out.btn-sm(href="#" onclick="updatePriceFilter()" style="width: 100%;margin-top: 0.5em;") Apply
+block scripts
+    script(src='/js/jquery-ui.js')
+    script(src='/js/isotope.min.js')
+    script(src='/js/isotope-loadmore.js')
+    script(src='/js/search.js')

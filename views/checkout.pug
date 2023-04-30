@@ -1,0 +1,105 @@
+extends layout
+block title
+    title Checkout | E-Store
+
+block styles
+    link(rel='stylesheet' href='/css/toastr.min.css')
+
+block content
+    div.breadcrumb_section.bg_gray.page-title-mini
+        div.container
+            div.row.align-items-center
+                div.col-md-6
+                    div.page-title
+                        h1 Checkout
+    div.main_content
+        div(class="section")
+            div(class="container")
+                div(class="row")
+                    div(class="col-md-6")
+                        div(class="heading_s1")
+                            h4 Billing Details
+                        form(method="post", id="checkout")
+                            div(class="form-group mb-3")
+                                input(class="form-control", required, type="text", placeholder="Name", value=`${user.name}`, disabled)
+                            div(class="form-group mb-3")
+                                input(class="form-control", type="hidden", name="billing_customer_id", value=`${user.id}`)
+                            div(class="form-group mb-3")
+                                input(class="form-control", required, type="text", name="billing_street_address", value=`${(billingAddress) ? billingAddress.street_address : ''}`, placeholder="Street Address *", disabled=!!(billingAddress))
+                            div(class="form-group mb-3")
+                                input(class="form-control", required, type="text", name="billing_city", value=`${(billingAddress) ? billingAddress.city : ''}`, placeholder="City *", disabled=!!(billingAddress))
+                            div(class="form-group mb-3")
+                                input(class="form-control", required, type="text", name="billing_state_province_region", value=`${(billingAddress) ? billingAddress.state_province_region : ''}`, placeholder="State *", disabled=!!(billingAddress))
+                            div(class="form-group mb-3")
+                                input(class="form-control", required, type="text", name="billing_country", value=`${(billingAddress) ? billingAddress.city : ''}`, placeholder="Country *", disabled=!!(billingAddress))
+                            div(class="form-group mb-3")
+                                input(class="form-control", required, type="text", name="billing_postal_code", value=`${(billingAddress) ? billingAddress.postal_code : ''}`, placeholder="Postcode / ZIP *", disabled=!!(billingAddress))
+                            div(class="form-group mb-3")
+                                input(class="form-control", type="hidden", name="billing_type", value=`billing`)
+                            div(class="form-group mb-3")
+                                input(class="form-control", required, type="email", placeholder="Email address *", value=`${user.email}`, disabled)
+                            div(class="ship_detail")
+                                div(class="form-group mb-3")
+                                    div(class="chek-form")
+                                        div(class="custome-checkbox")
+                                            input#differentaddress(class="form-check-input", type="checkbox", name="isShipping")
+                                            label(class="form-check-label label_info", for="differentaddress")
+                                                span Ship to a different address?
+                                div(class="different_address")
+                                    div(class="form-group mb-3")
+                                        input(type="text", required, class="form-control", placeholder="Name", value=`${user.name}`, disabled)
+                                    div(class="form-group mb-3")
+                                        input(class="form-control", type="hidden", name="shipping_customer_id", value=`${user.id}`)
+                                    div(class="form-group mb-3")
+                                        input(type="text", class="form-control", name="shipping_street_address", required, value=`${(shippingAddress) ? shippingAddress.street_address : ''}`, placeholder="Street Address *", disabled=!!(shippingAddress))
+                                    div(class="form-group mb-3")
+                                        input(class="form-control", required, type="text", name="shipping_city", placeholder="City *", value=`${(shippingAddress) ? shippingAddress.city : ''}`, disabled=!!(shippingAddress))
+                                    div(class="form-group mb-3")
+                                        input(class="form-control", required, type="text", name="shipping_state_province_region", placeholder="State *", value=`${(shippingAddress) ? shippingAddress.state_province_region : ''}`, disabled=!!(shippingAddress))
+                                    div(class="form-group mb-3")
+                                        input(class="form-control", required, type="text", name="shipping_country", value=`${(shippingAddress) ? shippingAddress.city : ''}`, placeholder="Country *", disabled=!!(shippingAddress))
+                                    div(class="form-group mb-3")
+                                        input(class="form-control", required, type="text", name="shipping_postal_code", placeholder="Postcode / ZIP *", value=`${(shippingAddress) ? shippingAddress.postal_code : ''}`, disabled=!!(shippingAddress))
+                                    div(class="form-group mb-3")
+                                        input(class="form-control", type="hidden", name="shipping_type", value=`shipping`)
+                                    div(class="form-group mb-3")
+                                        input(class="form-control", required, type="email", placeholder="Email address *", value=`${user.email}`, disabled)
+                    div(class="col-md-6")
+                        div(class="order_review")
+                            div(class="heading_s1")
+                                h4 Your Orders
+                            div(class="table-responsive order_table")
+                                table(class="table")
+                                    thead
+                                        tr
+                                            th Product
+                                            th Total
+                                    tbody
+                                        each item in items
+                                            tr
+                                                td= item.product.name
+                                                    span.product-qty  x #{item.quantity}
+                                                td $#{item.total}
+                                    tfoot
+                                        tr
+                                            th SubTotal
+                                            td(class="product-subtotal") $#{total}
+                                        tr
+                                            th Shipping
+                                            td Free Shipping
+                                        tr
+                                            th Total
+                                            td(class="product-subtotal") $#{total}
+                            div(class="payment_method")
+                                div(class="heading_s1")
+                                    h4 Payment
+                                div(class="payment_option")
+                                    div(class="custome-radio")
+                                        input#cod(class="form-check-input", required, type="radio", name="payment_option", value="option3", checked)
+                                        label(class="form-check-label", for="cod") Cash on Delivery
+                                        p(data-method="option3", class="payment-text") Pay upon delivery of your product.
+                            a(onclick="checkout()", id="checkout-btn", class="btn btn-fill-out btn-block") Place Order
+
+block scripts
+    script(src="/js/toastr.min.js")
+    script(src="/js/checkout.js")
