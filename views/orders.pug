@@ -1,0 +1,43 @@
+extends layout
+
+block variables
+    - const options = {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short'};
+
+block title
+    title Orders | E-Store
+
+block content
+    div.breadcrumb_section.bg_gray.page-title-mini
+        div.container
+            div.row.align-items-center
+                div.col-md-6
+                    div.page-title
+                        h1 Orders
+    div.main_content
+        .section
+            .container
+                .row
+                    .col-lg-12
+                        .tab-content.dashboard_content
+                            .tab-pane.fade.active.show#orders(role='tabpanel', aria-labelledby='orders-tab')
+                                .card
+                                    .card-header
+                                        h3 Orders
+                                    .card-body
+                                        .table-responsive
+                                            table.table
+                                                thead
+                                                    tr
+                                                        th Order
+                                                        th Date
+                                                        th Status
+                                                        th Total
+                                                tbody
+                                                    each order in orders
+                                                        tr
+                                                            td= order.id
+                                                            td= new Date(order.order_date).toLocaleDateString('en-US', options)
+                                                            td= order.status
+                                                            td= `$${order.total} for ${order.total_quantity} item(s)`
+
+

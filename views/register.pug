@@ -1,0 +1,49 @@
+extends layout.pug
+
+block title
+    title Register | E-Store
+
+block content
+    div.breadcrumb_section.bg_gray.page-title-mini
+        div.container
+            div.row.align-items-center
+                div.col-md-6
+                    div.page-title
+                        h1 Register
+    div.main_content
+        div.login_register_wrap.section
+            div.container
+                div.row.justify-content-center
+                    div.col-xl-6.col-md-10
+                        div.login_wrap
+                            div.padding_eight_all.bg-white
+                                div.heading_s1
+                                    h3 Create an Account
+                                form(method='post' action='/register')
+                                    .form-group.mb-3
+                                        input(class=`form-control ${validNameClass || ''}` type='text' name='name' placeholder='Enter Your Name' minlength='3' value=`${name || ''}` required)
+                                        div.invalid-feedback= validNameMessage
+                                    .form-group.mb-3
+                                        input(class=`form-control ${validUsernameClass || ''}` type='text' name='username' placeholder='Enter Username' minlength='4' value=`${username || ''}` required)
+                                        div.invalid-feedback= validUsernameMessage
+                                    .form-group.mb-3
+                                        input(class=`form-control ${validEmailClass || ''}` type='email' name='email' placeholder='Enter Your Email' value=`${email || ''}` required)
+                                        div.invalid-feedback= validEmailMessage
+                                    .form-group.mb-3
+                                        input(class=`form-control ${validPasswordClass || ''}` type='password' name='password' placeholder='Password' minlength='8' required)
+                                        div.invalid-feedback= validPasswordMessage
+                                    .form-group.mb-3
+                                        input(class=`form-control ${validConfirmPasswordClass || ''}` type='password' name='confirm_password' placeholder='Confirm Password' minlength='8' required)
+                                        div.invalid-feedback= validConfirmPasswordMessage
+                                    .login_footer.form-group.mb-3
+                                        div.chek-form
+                                            div.custome-checkbox
+                                                input.form-check-input(type='checkbox' name='checkbox' id='terms' value='')
+                                                label.form-check-label(for='terms')
+                                                    span I agree to terms & policy.
+                                    .form-group.mb-3
+                                        button.btn.btn-fill-out.btn-block(type='submit' name='register') Register
+                                div.different_login
+                                    span or
+                                div.form-note.text-center Already have an account?
+                                    a(href='/login') Log in
