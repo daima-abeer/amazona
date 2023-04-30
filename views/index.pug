@@ -1,0 +1,32 @@
+extends layout.pug
+
+block styles
+    link(rel='stylesheet' href='/css/toastr.min.css')
+
+block content
+    .main_content
+        .section
+            .container
+                .row
+                    .col-12
+                        .row.shop_container.loadmore(data-item='8' data-item-show='4' data-finish-message='No More Item to Show' data-btn='Load More')
+                            each prod in products
+                                .col-lg-3.col-md-4.col-6.grid_item(style='cursor: pointer;')
+                                    .product
+                                        .product_img
+                                            img(src= prod.thumbnail alt= prod.name)
+                                        .product_info
+                                            h6.product_title= prod.name
+                                            .product_price
+                                                span.price $#{prod.price}
+                                            .rating_wrap
+                                                .rating
+                                                    .product_rate(style=`width:${prod.rating * 20}%`)
+                                                span.rating_num
+                                                    = prod.rating
+                                            a.btn.btn-fill-out.btn-sm(href='#' id=`cart-btn-${prod.id}` onclick=`addToCart(${prod.id})` style='width: 100%;margin-top: 0.5em;') Add to Cart
+block scripts
+    script(src='/js/isotope.min.js')
+    script(src='/js/isotope-loadmore.js')
+    script(src='/js/toastr.min.js')
+    script(src='/js/shop.js')

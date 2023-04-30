@@ -1,0 +1,37 @@
+header.header_wrap.fixed-top.header_with_topbar(style="box-shadow: 2px 2px 5px rgba(0,0,0,0.1);")
+    .bottom_header.dark_skin.main_menu_uppercase
+        .container
+            nav.navbar.navbar-expand-lg
+                a.navbar-brand(href='/')
+                    img.logo_dark(src='/images/logo_dark.png' alt='logo')
+                button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-expanded='false')
+                    span.ion-android-menu
+                #navbarSupportedContent.collapse.navbar-collapse.justify-content-end
+                    ul.navbar-nav
+                        li
+                            a.nav-link(href='/') Home
+                        if loggedIn
+                            li
+                                a.nav-link(href='/orders') Orders
+                        li
+                            a.nav-link(href='/cart') Cart
+                        unless loggedIn
+                            li
+                                a.nav-link(href='/login') Login
+                            li
+                                a.nav-link(href='/register') Register
+                        else
+                            li
+                                a.nav-link(href='/logout') Logout
+                ul.navbar-nav.attr-nav.align-items-center
+                    li
+                        a.nav-link.search_trigger(href='javascript:void(0);')
+                            i.linearicons-magnifier
+                        .search_wrap
+                            span.close-search
+                                i.ion-ios-close-empty
+                            form(method='GET' action='/search')
+                                input#search_input.form-control(type='text' name='q' placeholder='Search')
+                                button.search_icon(type='submit')
+                                    i.ion-ios-search-strong
+                        .search_overlay

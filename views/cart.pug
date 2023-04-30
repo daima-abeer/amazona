@@ -1,0 +1,84 @@
+extends layout.pug
+
+block title
+    title Cart | E-Store
+
+block styles
+    link(rel='stylesheet' href='css/toastr.min.css')
+
+block content
+    - let cartItems = [];
+    .breadcrumb_section.bg_gray.page-title-mini
+        .container
+            .row.align-items-center
+                .col-md-6
+                    .page-title
+                        h1 Shopping Cart
+    .main_content
+        .section
+            .container
+                .row
+                    .col-12
+                        .table-responsive.shop_cart_table
+                            table.table
+                                thead
+                                    tr
+                                        th.product-thumbnail &nbsp;
+                                        th.product-name Product
+                                        th.product-price Price
+                                        th.product-quantity Quantity
+                                        th.product-subtotal Total
+                                        th.product-remove Remove
+                                tbody
+                                    each item in items
+                                        tr(id=`cart-item-${item.product.id}`)
+                                            td.product-thumbnail
+                                                img(src=item.product.thumbnail, alt=item.product.name)
+                                            td.product-name(data-title="Product")=item.product.name
+                                            td.product-price(data-title="Price") $#{item.product.price}
+                                            td.product-quantity(data-title="Quantity")
+                                                .quantity
+                                                    input.minus(type="button", value="-", onclick=`updateQuantity(${item.product.id}, -1)`)
+                                                    input.qty(type="text", id=`cart-item-quantity-${item.product.id}` name="quantity", value=item.quantity, title="Qty", size="4")
+                                                    input.plus(type="button", value="+", onclick=`updateQuantity(${item.product.id}, 1)`)
+                                            td.product-subtotal(data-title="Total") $#{item.total}
+                                            td.product-remove(data-title="Remove")
+                                                a(href="#" onclick=`removeFromCart(${item.product.id})`)
+                                                    i.fas.fa-times
+                                        - cartItems.push({id: item.product.id, quantity: item.quantity})
+                                tfoot
+                                    tr
+                                        td.px-0(colspan='6' style='border-bottom-width: 0;')
+                                            .row.g-0.align-items-center
+                                                .col-12.text-start.text-md-end
+                                                    button.btn.btn-line-fill.btn-sm(type='submit', onclick=`updateCart(${JSON.stringify(cartItems)})`) Update Cart
+                .row
+                    .col-12
+                        .medium_divider
+                        .divider.center_icon
+                            i.fab.fa-opencart
+                        .medium_divider
+                .row
+                    .col-md-6
+                    .col-md-6
+                        .border.p-3.p-md-4
+                            .heading_s1.mb-3
+                                h6 Cart Totals
+                            .table-responsive
+                                table.table
+                                    tbody
+                                        tr
+                                            td.cart_total_label Cart Subtotal
+                                            td.cart_total_amount(id='cart-subtotal') $#{total}
+                                        tr
+                                            td.cart_total_label Shipping
+                                            td.cart_total_amount Free Shipping
+                                        tr
+                                            td.cart_total_label Total
+                                            td.cart_total_amount
+                                                strong(id='cart-total') $#{total}
+                            a.btn.btn-fill-out(href='/checkout') Proceed To CheckOut
+
+block scripts
+    script(src='js/toastr.min.js')
+    script(src='js/shop.js')

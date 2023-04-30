@@ -1,0 +1,31 @@
+block variables
+
+doctype html
+html(lang="en")
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        block title
+            title E-Store
+        link(rel='shortcut icon' type='image/x-icon' href='/images/favicon.png')
+        link(rel='stylesheet' href='/bootstrap/css/bootstrap.min.css')
+        link(href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap' rel='stylesheet')
+        link(rel='stylesheet' href='/css/all.min.css')
+        link(rel='stylesheet' href='/css/ionicons.min.css')
+        link(rel='stylesheet' href='/css/linearicons.css')
+        link(rel='stylesheet' href='/css/simple-line-icons.css')
+        link(rel='stylesheet' href='/css/style.css')
+        link(rel='stylesheet' href='/css/responsive.css')
+        block styles
+    body
+        include header.pug
+        block content
+        include footer.pug
+        a.scrollup(href='#' style='display: none;')
+            i.ion-ios-arrow-up
+        script(src='/js/jquery-3.6.0.min.js')
+        script(src='/bootstrap/js/bootstrap.min.js')
+        script(src='/js/scripts.js')
+        block scripts
