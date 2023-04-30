@@ -1,0 +1,60 @@
+extends layout
+
+block variables
+    - const options = {month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short'};
+
+block title
+    title Products | E-Store
+
+block styles
+    link(rel='stylesheet' href='/css/toastr.min.css')
+
+block content
+    div.breadcrumb_section.bg_gray.page-title-mini
+        div.container
+            div.row.align-items-center
+                div.col-md-6
+                    div.page-title
+                        h1 Products
+    div.main_content
+        .section
+            .container
+                .row(style="text-align: right; margin-bottom: 1em;")
+                    .col-12
+                        a.btn.btn-fill-out.btn-sm(href="/admin/product/add") Add Product
+                .row
+                    div.col-12
+                        div.table-responsive.shop_cart_table
+                            table.table
+                                thead
+                                    tr
+                                        th.product-thumbnail &nbsp;
+                                        th.product-name Product
+                                        th.product-price Price
+                                        th.product-rating Rating
+                                        th.product-edit Edit
+                                        th.product-remove Remove
+                                tbody
+                                    each product in products
+                                        tr
+                                            td.product-thumbnail
+                                                a(href='/admin/product/edit/' + product.id)
+                                                    img(src=product.thumbnail, alt=product.name)
+                                            td.product-name(data-title='Product')
+                                                a(href='/admin/product/edit/' + product.id) #{product.name}
+                                            td.product-price(data-title='Price') $#{product.price}
+                                            td.product-rating(data-title='Rating') #{product.rating}
+                                            td.product-edit(data-title='Edit')
+                                                a(href='/admin/product/edit/' + product.id)
+                                                    i.fas.fa-edit
+                                            td.product-remove(data-title='Remove')
+                                                a(href='#', onclick=`deleteProduct(${product.id})`)
+                                                    i.fas.fa-times
+                                tfoot
+                                    tr
+                                        td(style="outline: none; border: none;")
+block scripts
+    script(src='/js/toastr.min.js')
+    script(src='/js/admin/product.js')
+
+

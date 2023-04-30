@@ -1,0 +1,64 @@
+extends layout
+
+block variables
+    - const options = {month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short'};
+
+block title
+    title Orders | E-Store
+
+block styles
+    link(rel='stylesheet' href='/css/toastr.min.css')
+
+block content
+    div.breadcrumb_section.bg_gray.page-title-mini
+        div.container
+            div.row.align-items-center
+                div.col-md-6
+                    div.page-title
+                        h1 Orders
+    div.main_content
+        .section
+            .container
+                .row
+                    .col-lg-12
+                        .tab-content.dashboard_content
+                            .tab-pane.fade.active.show#orders(role='tabpanel', aria-labelledby='orders-tab')
+                                .card
+                                    .card-header
+                                        h3 Orders
+                                    .card-body
+                                        .table-responsive
+                                            table.table
+                                                thead
+                                                    tr
+                                                        th ID
+                                                        th Products
+                                                        th Customer
+                                                        th Date
+                                                        th Status
+                                                        th Total
+                                                        th Actions
+                                                tbody
+                                                    each order in orders
+                                                        tr
+                                                            td#orderID= order.id
+                                                            td
+                                                                each product in order.products.split("<br>")
+                                                                    div= product
+                                                            td= order.customer_name
+                                                            td= new Date(order.order_date).toLocaleDateString('en-US', options)
+                                                            td= order.status
+                                                            td= `$${order.total}`
+                                                            td
+                                                                select.form-control.first_null.not_chosen(name='status', data-order-id=order.id)
+                                                                    option(value="") Select Status
+                                                                    option(value="pending") Pending
+                                                                    option(value="processing") Processing
+                                                                    option(value="shipped") Shipped
+                                                                    option(value="delivered") Delivered
+                                                                    option(value="cancelled") Cancelled
+block scripts
+    script(src='/js/toastr.min.js')
+    script(src='/js/admin/order.js')
+
+
